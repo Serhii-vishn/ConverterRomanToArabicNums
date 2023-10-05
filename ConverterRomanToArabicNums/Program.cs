@@ -26,24 +26,23 @@ namespace ConverterRomanToArabicNums
             romanianNums.Add('C', 100);
             romanianNums.Add('D', 500);
             romanianNums.Add('M', 1000);
-            
-            int result = romanianNums[romanianStr[romanianStr.Length - 1]];
 
-            for (int i = romanianStr.Length - 2; i >= 0; i--)
+            int lastNum = romanianStr.Length - 1;
+            int result = romanianNums[romanianStr[lastNum]];
+            int arabian;
+            for (int i = lastNum - 1; i >= 0; i--)
             {
-                if(result <= romanianNums[romanianStr[i]])
+                arabian = romanianNums[romanianStr[i]];
+                if(arabian < romanianNums[romanianStr[i+1]])
                 {
-                    result += romanianNums[romanianStr[i]];
+                    result -= arabian;
                 }
                 else
                 {
-                    result -= romanianNums[romanianStr[i]];
+                    result += arabian;
                 }
-            }
-
-            
+            }           
             return result;
         }
-
     }
 }
