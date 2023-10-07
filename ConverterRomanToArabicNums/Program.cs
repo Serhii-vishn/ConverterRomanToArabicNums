@@ -34,11 +34,11 @@ namespace ConverterRomanToArabicNums
         {
             while(true)
             {
-                Console.WriteLine("\t\tConverter Roman to arabian numbers");
+                Console.WriteLine("\n\t\tConverter Roman to arabian numbers");
                 Console.WriteLine("\t--------------------------------------------------");
                 Console.Write("Enter romanian num: "); string romanianStr = Console.ReadLine();
 
-                if (ValidateInput(romanianStr))
+                if (ValidateInput(romanianStr.ToUpper()))
                     Console.WriteLine("Arabian num: " + ConverterRomToArabian(romanianStr.ToUpper()));
                 else
                     Console.WriteLine("Error! invalid symbol. Try Again");
