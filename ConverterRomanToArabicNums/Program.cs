@@ -6,28 +6,6 @@ namespace ConverterRomanToArabicNums
 {
     internal class Program
     {
-        public static Dictionary<char, int> romanianNums = new Dictionary<char, int>()
-        {
-            {'I', 1},
-            {'V', 5},
-            {'X', 10},
-            {'L', 50},
-            {'C', 100},
-            {'M', 1000}
-        };
-
-        public static bool ValidateInput(string input)
-        {
-            foreach (char c in input)
-            {
-                if (!romanianNums.ContainsKey(c))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
         static void Main(string[] args)
         {
             while(true)
@@ -48,10 +26,8 @@ namespace ConverterRomanToArabicNums
                     {
                         Console.Write("Enter romanian num: "); string romanianStr = Console.ReadLine();
 
-                        if (ValidateInput(romanianStr.ToUpper()))
+                        if (ConverterRomToArabian(romanianStr.ToUpper()) > 0)
                             Console.WriteLine("Arabian num: " + ConverterRomToArabian(romanianStr.ToUpper()));
-                        else
-                            Console.WriteLine("Error! invalid symbol. Try Again");
                         break;
                     }
                     case '2':
@@ -78,26 +54,55 @@ namespace ConverterRomanToArabicNums
         }
 
         public static int ConverterRomToArabian (string romanianStr)
-        {       
-            int lastNum = romanianStr.Length - 1;
-            
-            int nxtArabian = romanianNums[romanianStr[lastNum]];
-            int result = romanianNums[romanianStr[lastNum]];
-
-            for (int i = lastNum - 1; i >= 0; i--)
+        {
+            Dictionary<char, int> romanianNums = new Dictionary<char, int>()
             {
-                int currArabian = romanianNums[romanianStr[i]];
-                if(currArabian < nxtArabian)
+                {'I', 1},
+                {'V', 5},
+                {'X', 10},
+                {'L', 50},
+                {'C', 100},
+                {'M', 1000}
+            };
+            int result = 0;
+            if (ValidateInput(romanianStr.ToUpper(), romanianNums))
+            {
+                int lastNum = romanianStr.Length - 1;
+
+                int nxtArabian = romanianNums[romanianStr[lastNum]];
+                result = romanianNums[romanianStr[lastNum]];
+
+                for (int i = lastNum - 1; i >= 0; i--)
                 {
-                    result -= currArabian;
+                    int currArabian = romanianNums[romanianStr[i]];
+                    if (currArabian < nxtArabian)
+                    {
+                        result -= currArabian;
+                    }
+                    else
+                    {
+                        result += currArabian;
+                    }
+                    nxtArabian = currArabian;
                 }
-                else
-                {
-                    result += currArabian;
-                }
-                nxtArabian = currArabian;
-            }           
+            }
+            else
+            {
+                Console.WriteLine("Error! invalid symbol. Try Again");
+            }            
             return result;
+        }
+
+        public static bool ValidateInput(string input, Dictionary<char, int> romanianNums)
+        {
+            foreach (char c in input)
+            {
+                if (!romanianNums.ContainsKey(c))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public static string ConverterArabToRomanian(int number)
