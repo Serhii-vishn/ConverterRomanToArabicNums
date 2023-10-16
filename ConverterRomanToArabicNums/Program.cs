@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,19 +35,50 @@ namespace ConverterRomanToArabicNums
         {
             while(true)
             {
-                Console.WriteLine("\n\t\tConverter Roman to arabian numbers");
+                Console.WriteLine("\n\t\tConverter Roman/Arabian numbers");
                 Console.WriteLine("\t--------------------------------------------------");
-                Console.Write("Enter romanian num: "); string romanianStr = Console.ReadLine();
 
-                if (ValidateInput(romanianStr.ToUpper()))
-                    Console.WriteLine("Arabian num: " + ConverterRomToArabian(romanianStr.ToUpper()));
-                else
-                    Console.WriteLine("Error! invalid symbol. Try Again");
+                Console.WriteLine("Convert:" +
+                                        "\n\tRoman to Arabic - 1" +
+                                        "\n\tArabic to Roman - 2" +
+                                        "\n\tExit - *");
+                Console.Write("\tEnter: "); var k = Console.ReadKey();
+                Console.WriteLine("\n");
 
-                Console.Write("\nExit - *, complete - any: "); var k = Console.ReadKey();
-                if (k.KeyChar == '*')
-                    break;
+                switch (k.KeyChar)
+                {
+                    case '1':
+                    {
+                        Console.Write("Enter romanian num: "); string romanianStr = Console.ReadLine();
+
+                        if (ValidateInput(romanianStr.ToUpper()))
+                            Console.WriteLine("Arabian num: " + ConverterRomToArabian(romanianStr.ToUpper()));
+                        else
+                            Console.WriteLine("Error! invalid symbol. Try Again");
+                        break;
+                    }
+                    case '2':
+                    {
+                        Console.Write("Enter arabian num: "); int arabianNum = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Romanian num: " + ConverterArabToRomanian(arabianNum));
+                        break;
+                    }
+                    case '*':
+                    {
+                        Console.WriteLine("\t\tThank you for using, have a nice day ;)");
+                        Console.WriteLine("\t-------------------------------------------------------");
+                        Console.ReadLine();
+                        return;
+                    }
+                    default:
+                    {
+                        Console.WriteLine("Error! Invalid symbol. Try Again");
+                        break;
+                    }
+                }
+                Console.ReadLine();
             }
+
         }
 
         public static int ConverterRomToArabian (string romanianStr)
@@ -69,6 +101,13 @@ namespace ConverterRomanToArabicNums
                 }
                 nxtArabian = currArabian;
             }           
+            return result;
+        }
+
+        public static string ConverterArabToRomanian(int number)
+        {
+            string result = string.Empty;
+
             return result;
         }
     }
