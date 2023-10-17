@@ -1,45 +1,55 @@
 # Roman to Arabic Converter
 This program provides a function that converts a Roman numeral string into its Arabic numeral equivalent. For example, if the input is "XV", the function will return 15. Similarly, if the input is "IV", it will return 4.
 
+This program not only converts Roman numerals to Arabic, but it also performs the reverse operation - converting Arabic numerals to Roman.
+
 ## Roman Numeral Conversions
-The program follows the standard conversions for Roman numerals:
+The program follows the standard conversions for both Roman and Arabic numerals:
 
-- I - 1
-- V - 5
-- X - 10
-- L - 50
-- C - 100
-- D - 500
-- M - 1000
-
-The program does not consider non-standard representations, such as "IIIV" for 2 (which, although occasionally used by the Romans, is not within the scope of this program). As per historical guidelines:
-"It is worth noting that other methods of 'subtracting' are not acceptable. For instance, the number 99 should be written as XCIX, not as IC."
+| Roman to Arabic   | Arabic to Roman  |
+|-------------------|-----------------|
+| I - 1             | 1 - I           |
+| V - 5             | 4 - IV          |
+| X - 10            | 5 - V           |
+| L - 50            | 9 - IX          |
+| C - 100           | 10 - X          |
+| D - 500           | 40 - XL         |
+| M - 1000          | 50 - L          |
+|                   | 90 - XC         |
+|                   | 100 - C         |
+|                   | 400 - CD        |
+|                   | 500 - D         |
+|                   | 900 - CM        |
+|                   | 1000 - M        |
 
 ## Implementation Details
-To achieve this conversion, the program uses two basic rules:
-If a larger number precedes a smaller number, they are added (the addition principle).
-If a smaller number precedes a larger one, the smaller number is subtracted from the larger one (the subtraction principle).
-This program provides accurate conversion of Roman numerals to Arabic numerals according to these established rules. The entered Roman numeral is converted from right to left.
-This program ensures accurate conversion from Roman to Arabic numerals in compliance with these established rules.
+### Roman to Arabic Conversion
+The program employs two fundamental rules:
+1. If a larger Roman numeral precedes a smaller Roman numeral, they are added together (the addition principle).
+2. If a smaller Roman numeral precedes a larger one, the smaller numeral is subtracted from the larger one (the subtraction principle).
+The program accurately converts Roman numerals to Arabic numerals, processing the input from right to left.
+
+### Arabic to Roman Conversion
+This conversion is performed by iteratively subtracting the largest possible Roman numeral from the given Arabic numeral. The corresponding Roman numeral is then added to the result string until the Arabic numeral is fully converted.
 
 ## Usage
-To use the program, call the provided function `ConverterRomToArabian (string romanianStr)` with a Roman numeral string as the argument. The function will return the equivalent Arabic numeral.
+To convert Roman to Arabic, call the function `ConverterRomToArabian(string romanianStr)` with a Roman numeral string as the argument. The function will return the equivalent Arabic numeral.
 
 Example usage:
 ```csharp
 int arabicValue = ConverterRomToArabian("XV"); // Returns 15
 int anotherValue = ConverterRomToArabian("IV"); // Returns 4
 ```
-or you can transfer the value from the console (protection against incorrect input is available):
+To convert Arabic to Roman, call the function ConverterArabToRomanian(int number) with an Arabic numeral as the argument. The function will return the equivalent Roman numeral.
+
+Example usage:
 ```csharp
-Console.Write("Enter romanian num: "); string romanianStr = Console.ReadLine();
-  if (ValidateInput(romanianStr))
-      Console.WriteLine("Arabian num: " + ConverterRomToArabian(romanianStr.ToUpper()));
-  else
-      Console.WriteLine("Error! invalid symbol. Try Again");
+string romanValue = ConverterArabToRomanian(15); // Returns "XV"
+string anotherRomanValue = ConverterArabToRomanian(4); // Returns "IV"
 ```
 ## Note
-This program assumes valid Roman numeral input adhering to standard conventions. Non-standard representations are not considered within the scope of this implementation.
+The program does not consider non-standard representations, such as "IIIV" for 2 (which, although occasionally used by the Romans, is not within the scope of this program). As per historical guidelines:
+"It is worth noting that other methods of 'subtracting' are not acceptable. For instance, the number 99 should be written as XCIX, not as IC."
 
 ## Contributing
 If you'd like to contribute, please fork the repository and make your changes. Submit a pull request with a clear description of your changes. Make sure to update the README if needed.
