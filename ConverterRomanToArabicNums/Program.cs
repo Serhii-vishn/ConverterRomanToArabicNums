@@ -17,23 +17,34 @@ namespace ConverterRomanToArabicNums
                                         "\n\tRoman to Arabic - 1" +
                                         "\n\tArabic to Roman - 2" +
                                         "\n\tExit - *");
-                Console.Write("\tEnter: "); var k = Console.ReadKey();
+                Console.Write("\tEnter: "); var keyInput = Console.ReadKey().KeyChar;
+
                 Console.WriteLine("\n");
 
-                switch (k.KeyChar)
+                switch (keyInput)
                 {
                     case '1':
                     {
-                        Console.Write("Enter romanian num: "); string romanianStr = Console.ReadLine();
+                        Console.Write("Enter romanian num: "); string romanNumeral = Console.ReadLine();
+                        romanNumeral = romanNumeral.ToUpper();
+                        int arabianNumeral = ConverterRomToArabian(romanNumeral);
 
-                        if (ConverterRomToArabian(romanianStr.ToUpper()) > 0)
-                            Console.WriteLine("Arabian num: " + ConverterRomToArabian(romanianStr.ToUpper()));
+                        if (arabianNumeral > 0)
+                            Console.WriteLine($"Arabian num: {arabianNumeral}");
                         break;
                     }
                     case '2':
                     {
-                        Console.Write("Enter arabian num: "); int arabianNum = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Romanian num: " + ConverterArabToRomanian(arabianNum));
+                        Console.Write("Enter arabian num: ");
+                        if (int.TryParse(Console.ReadLine(), out int arabianNum))
+                        {
+                            string romanNumeral = ConverterArabToRomanian(arabianNum);
+                            Console.WriteLine($"Romanian num: {romanNumeral}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Error! Invalid input. Try Again");
+                        }                       
                         break;
                     }
                     case '*':
@@ -55,7 +66,7 @@ namespace ConverterRomanToArabicNums
 
         public static int ConverterRomToArabian (string romanianStr)
         {
-            Dictionary<char, int> romanianNums = new Dictionary<char, int>()
+            var romanianNums = new Dictionary<char, int>()
             {
                 {'I', 1},
                 {'V', 5},
@@ -64,8 +75,10 @@ namespace ConverterRomanToArabicNums
                 {'C', 100},
                 {'M', 1000}
             };
+
             int result = 0;
-            if (ValidateInput(romanianStr.ToUpper(), romanianNums))
+
+            if (ValidateInput(romanianStr, romanianNums))
             {
                 int lastNum = romanianStr.Length - 1;
 
@@ -107,8 +120,7 @@ namespace ConverterRomanToArabicNums
 
         public static string ConverterArabToRomanian(int number)
         {
-            string result = string.Empty;
-            Dictionary<string, int> arabicNums = new Dictionary<string, int>()
+            var arabicNums = new Dictionary<string, int>()
             {
                 {"I", 1},
                 {"IV", 4},
@@ -124,6 +136,8 @@ namespace ConverterRomanToArabicNums
                 {"CM", 900},
                 {"M", 1000}
             };
+
+            string result = string.Empty;
 
             foreach (var paitNums in arabicNums.OrderByDescending(x => x.Value))
             {
